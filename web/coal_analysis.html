@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!--  -->
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">   
+    
+    <title>Coal Analysis</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"> </script>   
+    
+  </head>
+  <body class="bg-light" data-new-gr-c-s-check-loaded="14.995.0" data-gr-ext-installed="">
+    
+    <div class="container">
+      <main>
+        
+        <div class="py-5 text-center">         
+          <div class="p-4 p-md-3 mb-auto rounded bg-body shadow-sm">
+              <h1 class="text-body">Coal Analysis using Machine Learning</h1>
+          </div>
+        </div>
+      
+      <div class="container">
+        <!--<form class="needs-validation" novalidate> -->
+        <div class="row">
+
+          <div class="col-lg-6">
+            <h4 class="mb-1">Input Proximate Value</h4>
+            <p class="mb-1 text-secondary">Recommend value in [...]</p>
+
+            <div class="form-group row">
+              <label for="colFormLabel" class="col-lg-5 col-form-label">Moisture [8.28-19.25%]:</label>
+              <div class="col-lg-7">
+                <input id="mois_input" type="number" class="form-control">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="colFormLabel" class="col-lg-5 col-form-label">Volatine [32.08-39.68%]:</label>
+              <div class="col-lg-7">
+                <input id="vol_input" type="number" class="form-control">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="colFormLabel" class="col-lg-5 col-form-label">Ash [18.32-39.69%]:</label>
+              <div class="col-lg-7">
+                <input id="ash_input" type="number" class="form-control">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="colFormLabel" class="col-lg-5 col-form-label">Carbon [15.37-32.02%]:</label>
+              <div class="col-lg-7">
+                <input id="car_input" type="number" class="form-control">
+              </div>
+            </div>
+
+            <div class="form-group row">
+              <label for="colFormLabel" class="col-lg-5 col-form-label">Sulfur [1.89-4.73%]:</label>
+              <div class="col-lg-7">
+                <input id="sul_input" type="number" class="form-control">
+              </div>
+            </div>
+<!--*************************************************************************************************************************************-->
+            <div class="form-group row">
+              <label for="colFormLabel" class="col-lg-5 col-form-label"></label>
+              <div class="col-lg-7">
+                <button id="run_button" type="button" class="col-lg-12 btn btn-danger">Calculate</button>
+              </div>
+              
+            </div>
+
+<!--*************************************************************************************************************************************-->         
+          </div>
+
+          <div class="col-lg-3">
+            <h4 class="text-body mb-4">Input Check</h4>
+            
+              <div class="text-body" id="mois_chk_show" class="mb-4">Moisture:</div>
+              <div class="text-body" id="vol_chk_show" class="mb-4">Volatine:</div>
+              <div class="text-body" id="ash_chk_show" class="mb-4">Ash:</div>
+              <div class="text-body" id="car_chk_show" class="mb-4">Carbon:</div>
+              <div class="text-body" id="sul_chk_show" class="mb-4">Sulfur:</div>
+              <hr class="my-3">
+              <div>If one of your input value out of range use the result in careful</div>
+              <div class="spinner-border my-0" id="spin" style="display: none;"></div>
+            
+          </div>
+          
+          <div class="col-lg-3">
+              <h4 class="text-body mb-2">Ultimate Value</h4>
+              <!--<div class="p-4 p-md-3 mb-auto rounded bg-body shadow-sm">-->
+              <div class="p-3 p-md-3 mb-auto rounded bg-primary shadow-sm">
+                
+                <div class="text-white" id="carbon_show" class="mb-1" >Carbon:</div>
+                <div class="text-white" id="hydrogen_show" class="mb-1">Hydrogen:</div>
+                <div class="text-white" id="nitrogen_show" class="mb-1">Nitrogen:</div>
+              </div>
+              
+          </div>
+
+        </div>
+        <!--</form>-->
+      </div>
+
+              <hr class="my-3">
+   
+      </main>
+    
+      <footer class="mb-2 pt-auto text-muted text-center text-small">
+        <div id="note">MAE = Mean Absolute Error, RMSE = Root Mean Squre Error</div>
+        <div id="note">Carbon result with MAE = 0.56, RMSE = 0.75 | Hydrogen result with MAE = 0.10, RMSE = 0.14 | Nitrogen result with MAE = 0.07, RMSE = 0.09</div>
+        <!--<div id="note">Note2: Hydrogen result with MAE = 0.10, RMSE = 0.14</div>
+        <div id="note">Note2: Nitrogen result with MAE = 0.07, RMSE = 0.09</div>-->
+        <div id="note">Model summary: 3 Layer with Hidden layer1: 64, hiden layer 2: 32 with relu function and output layer: 1</div>
+        <div class ="mb-2" id="note">Develope by Pitimon Boonyakom Tel: 67730 email: pitimon.b@egat.co.th / FEB2021_r7</div>
+        <img src="https://raw.githubusercontent.com/pitimonb/coal_analysis/main/web/img/coal_model.jpg" alt="alternatetext">
+      </footer>
+    </div>   
+  
+  </body>
+
+  <script>
+
+    let spin_unshow = document.getElementById('spin');
+
+    let cal_button = document.getElementById('run_button');
+          
+    cal_button.addEventListener('click',run);  
+    
+    function transfrom_result(x){
+        x = String(x);
+        x = x.replace("\n", "").replace("\r", "");
+        x = x.replace("    ", "").replace("\r", "");
+        x = x.substr(6, 6);
+        return x;
+    }
+       
+        async function run(){
+
+          spin_unshow.style.display = "block";
+
+          let mois_val = document.getElementById('mois_input');
+          let vol_val = document.getElementById('vol_input');
+          let ash_val = document.getElementById('ash_input');
+          let car_val = document.getElementById('car_input');
+          let sul_val = document.getElementById('sul_input');
+          let cal_button = document.getElementById('run_button');
+
+          mois_val = Number(mois_val.value);
+          vol_val = Number(vol_val.value);
+          ash_val = Number(ash_val.value);
+          car_val = Number(car_val.value);
+          sul_val = Number(sul_val.value);
+ 
+          let mois_lower_range = 8.28;
+          let mois_upper_range = 19.25;
+          let vol_lower_range = 32.08;
+          let vol_upper_range = 39.68;
+          let ash_lower_range = 18.32;
+          let ash_upper_range = 39.69;
+          let car_lower_range = 15.37;
+          let car_upper_range = 32.02;
+          let sul_lower_range = 1.89;
+          let sul_upper_range = 4.73;
+
+          let mois_chk_upper_range = mois_val > mois_upper_range;
+          let mois_chk_lower_range = mois_val < mois_lower_range;
+
+          let vol_chk_upper_range = vol_val > vol_upper_range;
+          let vol_chk_lower_range = vol_val < vol_lower_range;
+          let ash_chk_upper_range = ash_val > ash_upper_range;
+          let ash_chk_lower_range = ash_val < ash_lower_range;
+          let car_chk_upper_range = car_val > car_upper_range;
+          let car_chk_lower_range = car_val < car_lower_range;
+          let sul_chk_upper_range = sul_val > sul_upper_range;
+          let sul_chk_lower_range = sul_val < sul_lower_range;
+
+          let mois_chk_val = mois_chk_upper_range || mois_chk_lower_range;
+          let vol_chk_val = vol_chk_upper_range || vol_chk_lower_range;
+          let ash_chk_val = ash_chk_upper_range || ash_chk_lower_range;
+          let car_chk_val = car_chk_upper_range || car_chk_lower_range;
+          let sul_chk_val = sul_chk_upper_range || sul_chk_lower_range; 
+
+          //******************************************************************************************************************************
+
+          let mois_mean = 13.186215;
+          let vol_mean = 35.040552;
+          let ash_mean = 29.698619;
+          let car_mean = 22.078149;
+          let sul_mean = 3.236961;
+            
+          let mois_std = 2.215375;
+          let vol_std = 1.391566;
+          let ash_std = 4.135234;	
+          let car_std = 2.936709;
+          let sul_std = 0.450471;
+
+          let mois_normed = (mois_val - mois_mean) / mois_std;
+          let vol_normed = (vol_val - vol_mean) / vol_std;
+          let ash_normed = (ash_val - ash_mean) / ash_std;
+          let car_normed = (car_val - car_mean) / car_std;
+          let sul_normed = (sul_val - sul_mean) / sul_std;
+            
+          //******************************************************************************************************************************
+
+          let carbon_url = 'https://raw.githubusercontent.com/pitimonb/coal_analysis/main/model/js/carbon/model.json'
+          let hydrogen_url = 'https://raw.githubusercontent.com/pitimonb/coal_analysis/main/model/js/hydrogen/model.json'
+          let nitrogen_url = 'https://raw.githubusercontent.com/pitimonb/coal_analysis/main/model/js/nitrogen/model.json'
+
+          car_model = await tf.loadLayersModel(carbon_url);
+          hyd_model = await tf.loadLayersModel(hydrogen_url); 
+          nit_model = await tf.loadLayersModel(nitrogen_url);                               
+
+          input = tf.tensor2d([mois_normed, vol_normed, ash_normed, car_normed, sul_normed], [1,5]);
+
+          let carbon_result = car_model.predict(input).asScalar();
+          let hydrogen_result = hyd_model.predict(input).asScalar();
+          let nitrogen_result = nit_model.predict(input).asScalar();
+                        
+          carbon_result = transfrom_result(carbon_result);
+          hydrogen_result = transfrom_result(hydrogen_result);
+          nitrogen_result = transfrom_result(nitrogen_result);
+
+          let carbon_show = document.getElementById('carbon_show');
+          carbon_show.innerHTML = "Carbon: " + carbon_result+" %";
+          let hydrogen_show = document.getElementById('hydrogen_show');
+          hydrogen_show.innerHTML = "Hydrogen: " + hydrogen_result+" %";
+          let nitrogen_show = document.getElementById('nitrogen_show');
+          nitrogen_show.innerHTML = "Nitrogen: " + nitrogen_result+" %";
+          
+          spin_unshow.style.display = "none";
+
+          let mois_chk_show = document.getElementById('mois_chk_show');
+          let vol_chk_show = document.getElementById('vol_chk_show');
+          let ash_chk_show = document.getElementById('ash_chk_show');
+          let car_chk_show = document.getElementById('car_chk_show');
+          let sul_chk_show = document.getElementById('sul_chk_show');
+
+          if (mois_chk_val == true){
+            mois_chk_show.innerHTML = "Moisture: <span style='color: red;'>Value out of range</span>";
+          }
+          else if (mois_chk_val == false){
+            mois_chk_show.innerHTML = "Moisture: <span style='color: green;'>Value in range</span>";
+          }
+          if (vol_chk_val == true){
+            vol_chk_show.innerHTML = "Volatine: <span style='color: red;'>Value out of range</span>";
+          }
+          else if (vol_chk_val == false){
+            vol_chk_show.innerHTML = "Volatine: <span style='color: green;'>Value in range</span>";
+          }
+          if (ash_chk_val == true){
+            ash_chk_show.innerHTML = "Ash: <span style='color: red;'>Value out of range</span>";
+          }
+          else if (vol_chk_val == false){
+            ash_chk_show.innerHTML = "Ash: <span style='color: green;'>Value in range</span>";
+          }
+          if (car_chk_val == true){
+            car_chk_show.innerHTML = "Carbon: <span style='color: red;'>Value out of range</span>";
+          }
+          else if (car_chk_val == false){
+            car_chk_show.innerHTML = "Carbon: V<span style='color: green;'>alue in range</span>";
+          }
+          if (sul_chk_val == true){
+            sul_chk_show.innerHTML = "Sulfur: <span style='color: red;'>Value out of range</span>";
+          }
+          else if (sul_chk_val == false){
+            sul_chk_show.innerHTML = "Sulfur: <span style='color: green;'>Value in range</span>";
+
+          }
+
+        }
+        
+    </script>
+    
+
+</html>
