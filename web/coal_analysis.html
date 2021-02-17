@@ -72,9 +72,7 @@
               <div class="col-lg-7">
                 <button id="run_button" type="button" class="col-lg-12 btn btn-danger">Calculate</button>
               </div>
-              
             </div>
-
 <!--*************************************************************************************************************************************-->         
           </div>
 
@@ -101,20 +99,17 @@
                 <div class="text-white" id="hydrogen_show" class="mb-1">Hydrogen:</div>
                 <div class="text-white" id="nitrogen_show" class="mb-1">Nitrogen:</div>
               </div>
-              
           </div>
 
         </div>
         <!--</form>-->
       </div>
-
               <hr class="my-3">
-   
       </main>
     
       <footer class="mb-2 pt-auto text-muted text-center text-small">
         <div id="note">MAE = Mean Absolute Error, RMSE = Root Mean Squre Error</div>
-        <div id="note">Carbon result with MAE = 0.56, RMSE = 0.75 | Hydrogen result with MAE = 0.10, RMSE = 0.14 | Nitrogen result with MAE = 0.07, RMSE = 0.09</div>
+        <div id="note">Carbon result with MAE = 0.50, RMSE = 0.63 | Hydrogen result with MAE = 0.09, RMSE = 0.12 | Nitrogen result with MAE = 0.06, RMSE = 0.08</div>
         <!--<div id="note">Note2: Hydrogen result with MAE = 0.10, RMSE = 0.14</div>
         <div id="note">Note2: Nitrogen result with MAE = 0.07, RMSE = 0.09</div>-->
         <div id="note">Model summary: 3 Layer with Hidden layer1: 64, hiden layer 2: 32 with relu function and output layer: 1</div>
@@ -187,8 +182,6 @@
           let car_chk_val = car_chk_upper_range || car_chk_lower_range;
           let sul_chk_val = sul_chk_upper_range || sul_chk_lower_range; 
 
-          //******************************************************************************************************************************
-
           let mois_mean = 13.186215;
           let vol_mean = 35.040552;
           let ash_mean = 29.698619;
@@ -206,9 +199,7 @@
           let ash_normed = (ash_val - ash_mean) / ash_std;
           let car_normed = (car_val - car_mean) / car_std;
           let sul_normed = (sul_val - sul_mean) / sul_std;
-            
-          //******************************************************************************************************************************
-
+ 
           let carbon_url = 'https://raw.githubusercontent.com/pitimonb/coal_analysis/main/model/js/carbon/model.json'
           let hydrogen_url = 'https://raw.githubusercontent.com/pitimonb/coal_analysis/main/model/js/hydrogen/model.json'
           let nitrogen_url = 'https://raw.githubusercontent.com/pitimonb/coal_analysis/main/model/js/nitrogen/model.json'
@@ -271,7 +262,6 @@
           }
           else if (sul_chk_val == false){
             sul_chk_show.innerHTML = "Sulfur: <span style='color: green;'>Value in range</span>";
-
           }
 
         }
@@ -280,7 +270,3 @@
     
 
 </html>
-
-<!-- add more xvxv-->
-<!-- add for more-->
-<!-- add tjis in feature branch-->
