@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <!--  -->
+    <!-- 02.17.2021 11:35 am -->
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -25,7 +25,7 @@
         </div>
       
       <div class="container">
-        <!--<form class="needs-validation" novalidate> -->
+        <form class="needs-validation" novalidate>
         <div class="row">
 
           <div class="col-lg-6">
@@ -66,14 +66,14 @@
                 <input id="sul_input" type="number" class="form-control">
               </div>
             </div>
-<!--*************************************************************************************************************************************-->
+
             <div class="form-group row">
               <label for="colFormLabel" class="col-lg-5 col-form-label"></label>
               <div class="col-lg-7">
                 <button id="run_button" type="button" class="col-lg-12 btn btn-danger">Calculate</button>
               </div>
             </div>
-<!--*************************************************************************************************************************************-->         
+
           </div>
 
           <div class="col-lg-3">
@@ -85,14 +85,13 @@
               <div class="text-body" id="car_chk_show" class="mb-4">Carbon:</div>
               <div class="text-body" id="sul_chk_show" class="mb-4">Sulfur:</div>
               <hr class="my-3">
-              <div>If one of your input value out of range use the result in careful</div>
+              <div>If one of your input value out of range use the result with care</div>
               <div class="spinner-border my-0" id="spin" style="display: none;"></div>
             
           </div>
           
           <div class="col-lg-3">
               <h4 class="text-body mb-2">Ultimate Value</h4>
-              <!--<div class="p-4 p-md-3 mb-auto rounded bg-body shadow-sm">-->
               <div class="p-3 p-md-3 mb-auto rounded bg-primary shadow-sm">
                 
                 <div class="text-white" id="carbon_show" class="mb-1" >Carbon:</div>
@@ -102,7 +101,7 @@
           </div>
 
         </div>
-        <!--</form>-->
+        </form>
       </div>
               <hr class="my-3">
       </main>
@@ -110,10 +109,8 @@
       <footer class="mb-2 pt-auto text-muted text-center text-small">
         <div id="note">MAE = Mean Absolute Error, RMSE = Root Mean Squre Error</div>
         <div id="note">Carbon result with MAE = 0.50, RMSE = 0.63 | Hydrogen result with MAE = 0.09, RMSE = 0.12 | Nitrogen result with MAE = 0.06, RMSE = 0.08</div>
-        <!--<div id="note">Note2: Hydrogen result with MAE = 0.10, RMSE = 0.14</div>
-        <div id="note">Note2: Nitrogen result with MAE = 0.07, RMSE = 0.09</div>-->
         <div id="note">Model summary: 3 Layer with Hidden layer1: 64, hiden layer 2: 32 with relu function and output layer: 1</div>
-        <div class ="mb-2" id="note">Develope by Pitimon Boonyakom Tel: 67730 email: pitimon.b@egat.co.th / FEB2021_r7</div>
+        <div class ="mb-2" id="note">Develope by Pitimon Boonyakom Tel: 67730 email: pitimon.b@egat.co.th | FEB2021</div>
         <img src="https://raw.githubusercontent.com/pitimonb/coal_analysis/main/web/img/coal_model.jpg" alt="alternatetext">
       </footer>
     </div>   
@@ -147,11 +144,11 @@
           let sul_val = document.getElementById('sul_input');
           let cal_button = document.getElementById('run_button');
 
-          mois_val = Number(mois_val.value);
-          vol_val = Number(vol_val.value);
-          ash_val = Number(ash_val.value);
-          car_val = Number(car_val.value);
-          sul_val = Number(sul_val.value);
+          mois_val_num = Number(mois_val.value);
+          vol_val_num = Number(vol_val.value);
+          ash_val_num = Number(ash_val.value);
+          car_val_num = Number(car_val.value);
+          sul_val_num = Number(sul_val.value);
  
           let mois_lower_range = 8.28;
           let mois_upper_range = 19.25;
@@ -164,17 +161,17 @@
           let sul_lower_range = 1.89;
           let sul_upper_range = 4.73;
 
-          let mois_chk_upper_range = mois_val > mois_upper_range;
-          let mois_chk_lower_range = mois_val < mois_lower_range;
+          let mois_chk_upper_range = mois_val_num > mois_upper_range;
+          let mois_chk_lower_range = mois_val_num < mois_lower_range;
 
-          let vol_chk_upper_range = vol_val > vol_upper_range;
-          let vol_chk_lower_range = vol_val < vol_lower_range;
-          let ash_chk_upper_range = ash_val > ash_upper_range;
-          let ash_chk_lower_range = ash_val < ash_lower_range;
-          let car_chk_upper_range = car_val > car_upper_range;
-          let car_chk_lower_range = car_val < car_lower_range;
-          let sul_chk_upper_range = sul_val > sul_upper_range;
-          let sul_chk_lower_range = sul_val < sul_lower_range;
+          let vol_chk_upper_range = vol_val_num > vol_upper_range;
+          let vol_chk_lower_range = vol_val_num < vol_lower_range;
+          let ash_chk_upper_range = ash_val_num > ash_upper_range;
+          let ash_chk_lower_range = ash_val_num < ash_lower_range;
+          let car_chk_upper_range = car_val_num > car_upper_range;
+          let car_chk_lower_range = car_val_num < car_lower_range;
+          let sul_chk_upper_range = sul_val_num > sul_upper_range;
+          let sul_chk_lower_range = sul_val_num < sul_lower_range;
 
           let mois_chk_val = mois_chk_upper_range || mois_chk_lower_range;
           let vol_chk_val = vol_chk_upper_range || vol_chk_lower_range;
@@ -194,11 +191,11 @@
           let car_std = 2.936709;
           let sul_std = 0.450471;
 
-          let mois_normed = (mois_val - mois_mean) / mois_std;
-          let vol_normed = (vol_val - vol_mean) / vol_std;
-          let ash_normed = (ash_val - ash_mean) / ash_std;
-          let car_normed = (car_val - car_mean) / car_std;
-          let sul_normed = (sul_val - sul_mean) / sul_std;
+          let mois_normed = (mois_val_num - mois_mean) / mois_std;
+          let vol_normed = (vol_val_num - vol_mean) / vol_std;
+          let ash_normed = (ash_val_num - ash_mean) / ash_std;
+          let car_normed = (car_val_num - car_mean) / car_std;
+          let sul_normed = (sul_val_num - sul_mean) / sul_std;
  
           let carbon_url = 'https://raw.githubusercontent.com/pitimonb/coal_analysis/main/model/js/carbon/model.json'
           let hydrogen_url = 'https://raw.githubusercontent.com/pitimonb/coal_analysis/main/model/js/hydrogen/model.json'
@@ -268,5 +265,4 @@
         
     </script>
     
-
 </html>
