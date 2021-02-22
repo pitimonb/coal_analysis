@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">   
+    <script src="papaparse.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <title>Batch Calulation</title>
+</head>
+<body class="bg-light" data-new-gr-c-s-check-loaded="14.995.0" data-gr-ext-installed="">
+    <div class="container">
+        <main>
+            <div class="py-4 text-center">         
+                <div class="p-md-2 mb-auto rounded bg-body shadow-sm">
+                    <h1 class="text-body">Coal Analysis using Machine Learning</h1>
+                </div>
+              </div>
+            <div class="container">
+                <input type="file" name="" id="upload-csv" accept=".csv">
+                <button type="submit" id="btn-upload-csv">Uplode CSV</button>
+                <br>
+                <br>
+                <label id="label-i">i</label>
+                <br>
+                <br>
+                <a href="/input_template.csv" download="input_template.csv">Download input template</a>
+            </div>
+        </main>
+    </div>
+        
+</body>
+<script type="text/javascript">
+    
+    var u_ar_carbon = ['AR Carbon Ulti.'];
+    var u_ar_nitrogen = ['AR Nitrogen Ulti.']
+    var u_ar_hydrogen_inc = ['AR Hydrogen Inc. Ulti.']
+    var u_ar_oxygen_inc = ['AR Oxygen Inc. Ulti.']
+    var u_ar_hydrogen_exc = ['AR Hydrogen. Exc Ulti.']
+    var u_ar_oxygen_exc = ['AR Oxygen Exc. Ulti.']
+
+    let btn_upload_csv = document.getElementById('btn-upload-csv').addEventListener('click', ()=> {
+    Papa.parse(document.getElementById('upload-csv').files[0], {
+      delimiter: "auto",
+      skipEmptyLines: true,
+      complete: batchCal,
+    });
+  });
+    async function batchCal(results){
+    
+            var loop_count = results.data.length - 1
+            for(i=1;i<results.data.length;i++){
+                let i_show = document.getElementById('label-i');
+                i_show.innerHTML = "i: " + (loop_count-i);
+                var row = results.data[i];
+			    //console.log("New row:",row);
+			    var cells = row.join(",").split(",");
+			    //console.log("New cells:",cells);
+			    //console.log("New cells length:",cells.length);
+			    var coal_input = cells.length;
+			    //console.log("Coal input:",coal_input);
+        
+                let p_ar_moisture = Number(cells[0]);
+                let p_ar_volatine = Number(cells[1]);
+                let p_ar_ash = Number(cells[2]);
+                let p_ar_fixcarbon = Number(cells[3]);
+                let p_ar_sulfur = Number(cells[4]);
+                let p_ar_hhv = Number(cells[5]);
+                let p_ar_lhv = Number(cells[6]);
+
+                    function transfrom_result(x){
+                        x = String(x);
+                        x = x.replace("\n", "").replace("\r", "");
+                        x = x.replace("    ", "").replace("\r", "");
+                        x = x.substr(6, 6);
+                        return x;
+                    }
+        
+                // console.log("p_ar_moisture: ",p_ar_moisture);
+                // console.log("p_ar_volatine: ",p_ar_volatine);
+                // console.log("p_ar_ash: ",p_ar_ash);
+                // console.log("p_ar_fixcarbon: ",p_ar_fixcarbon);
+                // console.log("p_ar_sulfur: ",p_ar_sulfur);
+                // console.log("p_ar_hhv: ",p_ar_hhv);
+                // console.log("p_ar_lhv: ",p_ar_lhv);
+
+                const p_ar_moisture_mean = 29.854001;
+                const p_ar_volatine_mean = 27.549441;
+                const p_ar_ash_mean = 25.216928;
+                const p_ar_fixcarbon_mean = 17.379639;
+                const p_ar_sulfur_mean = 2.743728;
+                const p_ar_hhv_mean = 2956.993276;
+                const p_ar_lhv_mean = 2668.084480;
+                
+                const p_ar_moisture_std = 1.755956;
+                const p_ar_volatine_std = 1.439363;
+                const p_ar_ash_std = 3.992142;
+                const p_ar_fixcarbon_std = 2.359325;
+                const p_ar_sulfur_std = 0.395033;
+                const p_ar_hhv_std = 253.427627;
+                const p_ar_lhv_std = 251.887351;
+
+                let p_ar_moisture_normed = (p_ar_moisture - p_ar_moisture_mean) / p_ar_moisture_std;
+                let p_ar_volatine_normed = (p_ar_volatine - p_ar_volatine_mean) / p_ar_volatine_std;
+                let p_ar_ash_normed = (p_ar_ash - p_ar_ash_mean) / p_ar_ash_std;
+                let p_ar_fixcarbon_normed = (p_ar_fixcarbon - p_ar_fixcarbon_mean) / p_ar_fixcarbon_std;
+                let p_ar_sulfur_normed = (p_ar_sulfur - p_ar_sulfur_mean) / p_ar_sulfur_std;
+                let p_ar_hhv_normed = (p_ar_hhv - p_ar_hhv_mean) / p_ar_hhv_std;
+                let p_ar_lhv_normed = (p_ar_lhv - p_ar_lhv_mean) / p_ar_lhv_std;
+
+                // console.log("p_ar_moisture_normed: ",p_ar_moisture_normed);
+                // console.log("p_ar_volatine_normed: ",p_ar_volatine_normed);
+                // console.log("p_ar_ash_normed: ",p_ar_ash_normed);
+                // console.log("p_ar_fixcarbon_normed: ",p_ar_fixcarbon_normed);
+                // console.log("p_ar_sulfur_normed: ",p_ar_sulfur_normed);
+                // console.log("p_ar_hhv_normed: ",p_ar_hhv_normed);
+                // console.log("p_ar_lhv_normed: ",p_ar_lhv_normed);
+
+                let u_ar_carbon_url = '/model/carbon/model.json'
+                let u_ar_nitrogen_url = '/model/nitrogen/model.json'
+                let u_ar_hydrogen_inc_url = '/model/hydrogen_inc/model.json'
+                let u_ar_oxygen_inc_url = '/model/oxygen_inc/model.json'
+                let u_ar_hydrogen_exc_url = '/model/hydrogen_exc/model.json'
+                let u_ar_oxygen_exc_url = '/model/oxygen_exc/model.json'
+
+                let u_ar_carbon_model = await tf.loadLayersModel(u_ar_carbon_url);
+                let u_ar_nitrogen_model = await tf.loadLayersModel(u_ar_nitrogen_url);
+                let u_ar_hydrogen_inc_model = await tf.loadLayersModel(u_ar_hydrogen_inc_url);
+                let u_ar_oxygen_inc_model = await tf.loadLayersModel(u_ar_oxygen_inc_url);
+                let u_ar_hydrogen_exc_model = await tf.loadLayersModel(u_ar_hydrogen_exc_url);
+                let u_ar_oxygen_exc_model = await tf.loadLayersModel(u_ar_oxygen_exc_url);
+               
+                input = await tf.tensor2d([p_ar_moisture_normed, p_ar_volatine_normed, p_ar_ash_normed, p_ar_fixcarbon_normed, p_ar_sulfur_normed, p_ar_hhv_normed, p_ar_lhv_normed], [1,7]);
+
+                let u_ar_carbon_result = u_ar_carbon_model.predict(input).asScalar();
+                let u_ar_nitrogen_result = u_ar_nitrogen_model.predict(input).asScalar();
+                let u_ar_hydrogen_inc_result = u_ar_hydrogen_inc_model.predict(input).asScalar();
+                let u_ar_oxygen_inc_result = u_ar_oxygen_inc_model.predict(input).asScalar();
+                let u_ar_hydrogen_exc_result = u_ar_hydrogen_exc_model.predict(input).asScalar();
+                let u_ar_oxygen_exc_result = u_ar_oxygen_exc_model.predict(input).asScalar();
+                
+        
+                u_ar_carbon_result = transfrom_result(u_ar_carbon_result);
+                u_ar_nitrogen_result = transfrom_result(u_ar_nitrogen_result);
+                u_ar_hydrogen_inc_result = transfrom_result(u_ar_hydrogen_inc_result);
+                u_ar_oxygen_inc_result = transfrom_result(u_ar_oxygen_inc_result);
+                u_ar_hydrogen_exc_result = transfrom_result(u_ar_hydrogen_exc_result);
+                u_ar_oxygen_exc_result = transfrom_result(u_ar_oxygen_exc_result);
+
+                // console.log("u_ar_carbon_result: ",u_ar_carbon_result);
+                // console.log("u_ar_nitrogen_result: ",u_ar_nitrogen_result);
+                // console.log("u_ar_hydrogen_inc_result: ",u_ar_hydrogen_inc_result);
+                // console.log("u_ar_oxygen_inc_result: ",u_ar_oxygen_inc_result);
+                // console.log("u_ar_hydrogen_exc_result: ",u_ar_hydrogen_exc_result);
+                // console.log("u_ar_oxygen_exc_result: ",u_ar_oxygen_exc_result);
+                
+                u_ar_carbon.push(u_ar_carbon_result)
+                u_ar_nitrogen.push(u_ar_nitrogen_result)
+                u_ar_hydrogen_inc.push(u_ar_hydrogen_inc_result)
+                u_ar_oxygen_inc.push(u_ar_oxygen_inc_result)
+                u_ar_hydrogen_exc.push(u_ar_hydrogen_exc_result)
+                u_ar_oxygen_exc.push(u_ar_oxygen_exc_result)
+
+                // console.log(u_ar_carbon);
+                // console.log(u_ar_nitrogen);
+                // console.log(u_ar_hydrogen_inc);
+                // console.log(u_ar_oxygen_inc);
+                // console.log(u_ar_hydrogen_exc);
+                // console.log(u_ar_oxygen_exc);
+                
+		    }
+      
+        var csv = Papa.unparse([u_ar_carbon,u_ar_nitrogen,u_ar_hydrogen_inc,u_ar_oxygen_inc,u_ar_hydrogen_exc,u_ar_oxygen_exc]);
+
+        //console.log("csv",csv);
+
+        var csvData = new Blob([csv], {type: 'text/csv;charset=utf-8;'});
+        var csvURL =  null;
+        if (navigator.msSaveBlob){
+            csvURL = navigator.msSaveBlob(csvData, 'download.csv');
+        }
+        else {
+            csvURL = window.URL.createObjectURL(csvData);
+        }
+        var tempLink = document.createElement('a');
+        tempLink.href = csvURL;
+        tempLink.setAttribute('download', 'download.csv');
+        tempLink.click();
+
+        u_ar_carbon = ['AR Carbon Ulti.'];
+        u_ar_nitrogen = ['AR Nitrogen Ulti.']
+        u_ar_hydrogen_inc = ['AR Hydrogen Inc. Ulti.']
+        u_ar_oxygen_inc = ['AR Oxygen Inc. Ulti.']
+        u_ar_hydrogen_exc = ['AR Hydrogen. Exc Ulti.']
+        u_ar_oxygen_exc = ['AR Oxygen Exc. Ulti.']
+      
+  }
+
+</script>
+</html>
