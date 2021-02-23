@@ -7,27 +7,58 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">   
     <script src="papaparse.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
-    <title>Batch Calulation</title>
+    <title>Mea Moh Coal Analysis using Machine Learning</title>
 </head>
 <body class="bg-light" data-new-gr-c-s-check-loaded="14.995.0" data-gr-ext-installed="">
     <div class="container">
         <main>
             <div class="py-4 text-center">         
                 <div class="p-md-2 mb-auto rounded bg-body shadow-sm">
-                    <h1 class="text-body">Coal Analysis using Machine Learning</h1>
+                    <h1 class="text-body">Mea Moh Coal Analysis using Machine Learning</h1>
                 </div>
               </div>
             <div class="container">
-                <input type="file" name="" id="upload-csv" accept=".csv">
-                <button type="submit" id="btn-upload-csv">Uplode CSV</button>
-                <br>
-                <br>
-                <label id="label-i">i</label>
-                <br>
-                <br>
-                <a href="/input_template.csv" download="input_template.csv">Download input template</a>
+                <div class="row">
+                    <div class="col-lg-7 col-md-8 mx-auto">
+                        <div class="p-md-2 mb-auto rounded bg-body shadow-sm">  
+                            <div class="form-group row">
+                                <label for="colFormLabel" class="col-lg-6 col-form-label my-2">1. Download input template file:</label>
+                                <div class="col-lg-6">
+                                    <a href="/dataset/input_template.csv" download="input_template.csv" class="btn btn-success my-2 col-lg-12">Download input template</a>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="colFormLabel" class="col-lg-6 col-form-label my-2">2. Choose input file (*.csv):</label>
+                                <div class="col-lg-6">
+                                    <input type="file" name="" class="shadow-sm my-3 col-lg-12" id="upload-csv" accept=".csv" >
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="colFormLabel" class="col-lg-6 col-form-label my-1">3. Upload file:</label>
+                                <div class="col-lg-6">
+                                    <button type="submit" class="btn btn-primary my-2 col-lg-12" id="btn-upload-csv">Uplode CSV</button>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="colFormLabel" class="col-lg-6 col-form-label my-1" id="label-percent">4. Calculation:</label>
+                            </div>
+                            <div class="form-group row">
+                                <label for="colFormLabel" class="col-lg-6 col-form-label my-1">5. Get your result:</label>
+                            </div>   
+                        </div>
+                    </div>
+                </div>
             </div>
+            <hr class="my-3">
         </main>
+        <footer class="mb-2 pt-auto text-muted text-center text-small">
+            <div>MAE = Mean Absolute Error | RMSE = Root Mean Squre Error</div>
+            <div>Carbon: MAE = 0.32, RMSE = 0.50 | Nitrogen: MAE = 0.06, RMSE = 0.08 | Hydrogen Inc.: MAE = 0.19, RMSE = 0.25 | Oxygen Inc.: MAE = 0.58, RMSE = 0.79 | Hydrogen Exc.: MAE = 0.18, RMSE = 0.25 | Oxygen Exc.: MAE = 0.45, RMSE = 0.62</div>
+            <div>Model summary: 3 Layer with Hidden layer1: 64, hiden layer 2: 32 with relu function and output layer: 1</div>
+            <div>with 2915 dataset | Last dataset in 8 FEB 2021 Lab ID: 210208120310</div>
+            <div class ="my-2">Develope by: Pitimon Boonyakom | Tel: 67730 | email: pitimon.b@egat.co.th | FEB2021</div>
+            <img src="/web/img/input_output.png" alt="input and output img">
+        </footer>
     </div>
         
 </body>
@@ -50,9 +81,13 @@
     async function batchCal(results){
     
             var loop_count = results.data.length - 1
+
             for(i=1;i<results.data.length;i++){
-                let i_show = document.getElementById('label-i');
-                i_show.innerHTML = "i: " + (loop_count-i);
+                //let i_show = document.getElementById('label-i');
+                let percent_show = document.getElementById('label-percent');
+                //i_show.innerHTML = "i: " + (loop_count-i);
+                percent_show.innerHTML = "4. Calculation: " + (i*100/loop_count) + "%";
+               
                 var row = results.data[i];
 			    //console.log("New row:",row);
 			    var cells = row.join(",").split(",");
@@ -139,7 +174,6 @@
                 let u_ar_oxygen_inc_result = u_ar_oxygen_inc_model.predict(input).asScalar();
                 let u_ar_hydrogen_exc_result = u_ar_hydrogen_exc_model.predict(input).asScalar();
                 let u_ar_oxygen_exc_result = u_ar_oxygen_exc_model.predict(input).asScalar();
-                
         
                 u_ar_carbon_result = transfrom_result(u_ar_carbon_result);
                 u_ar_nitrogen_result = transfrom_result(u_ar_nitrogen_result);
@@ -194,7 +228,6 @@
         u_ar_oxygen_inc = ['AR Oxygen Inc. Ulti.']
         u_ar_hydrogen_exc = ['AR Hydrogen. Exc Ulti.']
         u_ar_oxygen_exc = ['AR Oxygen Exc. Ulti.']
-      
   }
 
 </script>
