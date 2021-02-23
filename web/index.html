@@ -53,7 +53,7 @@
         </main>
         <footer class="mb-2 pt-auto text-muted text-center text-small">
             <div>MAE = Mean Absolute Error | RMSE = Root Mean Squre Error</div>
-            <div>Carbon: MAE = 0.32, RMSE = 0.50 | Nitrogen: MAE = 0.06, RMSE = 0.08 | Hydrogen Inc.: MAE = 0.19, RMSE = 0.25 | Oxygen Inc.: MAE = 0.58, RMSE = 0.79 | Hydrogen Exc.: MAE = 0.18, RMSE = 0.25 | Oxygen Exc.: MAE = 0.45, RMSE = 0.62</div>
+            <div>Carbon: MAE = 0.54, RMSE = 0.68 | Nitrogen: MAE = 0.06, RMSE = 0.09 | Hydrogen Exc.: MAE = 0.20, RMSE = 0.27 | Oxygen Exc.: MAE = 0.45, RMSE = 0.62</div>
             <div>Model summary: 3 Layer with Hidden layer1: 64, hiden layer 2: 32 with relu function and output layer: 1</div>
             <div>with 2915 dataset | Last dataset in 8 FEB 2021 Lab ID: 210208120310</div>
             <div class ="my-2">Develope by: Pitimon Boonyakom | Tel: 67730 | email: pitimon.b@egat.co.th | FEB2021</div>
@@ -66,8 +66,8 @@
     
     var u_ar_carbon = ['AR Carbon Ulti.'];
     var u_ar_nitrogen = ['AR Nitrogen Ulti.']
-    var u_ar_hydrogen_inc = ['AR Hydrogen Inc. Ulti.']
-    var u_ar_oxygen_inc = ['AR Oxygen Inc. Ulti.']
+    //var u_ar_hydrogen_inc = ['AR Hydrogen Inc. Ulti.']
+    //var u_ar_oxygen_inc = ['AR Oxygen Inc. Ulti.']
     var u_ar_hydrogen_exc = ['AR Hydrogen. Exc Ulti.']
     var u_ar_oxygen_exc = ['AR Oxygen Exc. Ulti.']
 
@@ -86,7 +86,7 @@
                 //let i_show = document.getElementById('label-i');
                 let percent_show = document.getElementById('label-percent');
                 //i_show.innerHTML = "i: " + (loop_count-i);
-                percent_show.innerHTML = "4. Calculation: " + (i*100/loop_count) + "%";
+                percent_show.innerHTML = "4. Calculation: " + Math.round((i*100/loop_count)) + "%";
                
                 var row = results.data[i];
 			    //console.log("New row:",row);
@@ -101,8 +101,8 @@
                 let p_ar_ash = Number(cells[2]);
                 let p_ar_fixcarbon = Number(cells[3]);
                 let p_ar_sulfur = Number(cells[4]);
-                let p_ar_hhv = Number(cells[5]);
-                let p_ar_lhv = Number(cells[6]);
+                //let p_ar_hhv = Number(cells[5]);
+                //let p_ar_lhv = Number(cells[6]);
 
                     function transfrom_result(x){
                         x = String(x);
@@ -125,24 +125,24 @@
                 const p_ar_ash_mean = 25.216928;
                 const p_ar_fixcarbon_mean = 17.379639;
                 const p_ar_sulfur_mean = 2.743728;
-                const p_ar_hhv_mean = 2956.993276;
-                const p_ar_lhv_mean = 2668.084480;
+                //const p_ar_hhv_mean = 2956.993276;
+                //const p_ar_lhv_mean = 2668.084480;
                 
                 const p_ar_moisture_std = 1.755956;
                 const p_ar_volatine_std = 1.439363;
                 const p_ar_ash_std = 3.992142;
                 const p_ar_fixcarbon_std = 2.359325;
                 const p_ar_sulfur_std = 0.395033;
-                const p_ar_hhv_std = 253.427627;
-                const p_ar_lhv_std = 251.887351;
+                //const p_ar_hhv_std = 253.427627;
+                //const p_ar_lhv_std = 251.887351;
 
                 let p_ar_moisture_normed = (p_ar_moisture - p_ar_moisture_mean) / p_ar_moisture_std;
                 let p_ar_volatine_normed = (p_ar_volatine - p_ar_volatine_mean) / p_ar_volatine_std;
                 let p_ar_ash_normed = (p_ar_ash - p_ar_ash_mean) / p_ar_ash_std;
                 let p_ar_fixcarbon_normed = (p_ar_fixcarbon - p_ar_fixcarbon_mean) / p_ar_fixcarbon_std;
                 let p_ar_sulfur_normed = (p_ar_sulfur - p_ar_sulfur_mean) / p_ar_sulfur_std;
-                let p_ar_hhv_normed = (p_ar_hhv - p_ar_hhv_mean) / p_ar_hhv_std;
-                let p_ar_lhv_normed = (p_ar_lhv - p_ar_lhv_mean) / p_ar_lhv_std;
+                //let p_ar_hhv_normed = (p_ar_hhv - p_ar_hhv_mean) / p_ar_hhv_std;
+                //let p_ar_lhv_normed = (p_ar_lhv - p_ar_lhv_mean) / p_ar_lhv_std;
 
                 // console.log("p_ar_moisture_normed: ",p_ar_moisture_normed);
                 // console.log("p_ar_volatine_normed: ",p_ar_volatine_normed);
@@ -154,31 +154,32 @@
 
                 let u_ar_carbon_url = '/model/carbon/model.json'
                 let u_ar_nitrogen_url = '/model/nitrogen/model.json'
-                let u_ar_hydrogen_inc_url = '/model/hydrogen_inc/model.json'
-                let u_ar_oxygen_inc_url = '/model/oxygen_inc/model.json'
+                //let u_ar_hydrogen_inc_url = '/model/hydrogen_inc/model.json'
+                //let u_ar_oxygen_inc_url = '/model/oxygen_inc/model.json'
                 let u_ar_hydrogen_exc_url = '/model/hydrogen_exc/model.json'
                 let u_ar_oxygen_exc_url = '/model/oxygen_exc/model.json'
 
                 let u_ar_carbon_model = await tf.loadLayersModel(u_ar_carbon_url);
                 let u_ar_nitrogen_model = await tf.loadLayersModel(u_ar_nitrogen_url);
-                let u_ar_hydrogen_inc_model = await tf.loadLayersModel(u_ar_hydrogen_inc_url);
-                let u_ar_oxygen_inc_model = await tf.loadLayersModel(u_ar_oxygen_inc_url);
+                //let u_ar_hydrogen_inc_model = await tf.loadLayersModel(u_ar_hydrogen_inc_url);
+                //let u_ar_oxygen_inc_model = await tf.loadLayersModel(u_ar_oxygen_inc_url);
                 let u_ar_hydrogen_exc_model = await tf.loadLayersModel(u_ar_hydrogen_exc_url);
                 let u_ar_oxygen_exc_model = await tf.loadLayersModel(u_ar_oxygen_exc_url);
                
-                input = await tf.tensor2d([p_ar_moisture_normed, p_ar_volatine_normed, p_ar_ash_normed, p_ar_fixcarbon_normed, p_ar_sulfur_normed, p_ar_hhv_normed, p_ar_lhv_normed], [1,7]);
+                //input = await tf.tensor2d([p_ar_moisture_normed, p_ar_volatine_normed, p_ar_ash_normed, p_ar_fixcarbon_normed, p_ar_sulfur_normed, p_ar_hhv_normed, p_ar_lhv_normed], [1,7]);
+                input = await tf.tensor2d([p_ar_moisture_normed, p_ar_volatine_normed, p_ar_ash_normed, p_ar_fixcarbon_normed, p_ar_sulfur_normed], [1,5]);
 
                 let u_ar_carbon_result = u_ar_carbon_model.predict(input).asScalar();
                 let u_ar_nitrogen_result = u_ar_nitrogen_model.predict(input).asScalar();
-                let u_ar_hydrogen_inc_result = u_ar_hydrogen_inc_model.predict(input).asScalar();
-                let u_ar_oxygen_inc_result = u_ar_oxygen_inc_model.predict(input).asScalar();
+                //let u_ar_hydrogen_inc_result = u_ar_hydrogen_inc_model.predict(input).asScalar();
+                //let u_ar_oxygen_inc_result = u_ar_oxygen_inc_model.predict(input).asScalar();
                 let u_ar_hydrogen_exc_result = u_ar_hydrogen_exc_model.predict(input).asScalar();
                 let u_ar_oxygen_exc_result = u_ar_oxygen_exc_model.predict(input).asScalar();
         
                 u_ar_carbon_result = transfrom_result(u_ar_carbon_result);
                 u_ar_nitrogen_result = transfrom_result(u_ar_nitrogen_result);
-                u_ar_hydrogen_inc_result = transfrom_result(u_ar_hydrogen_inc_result);
-                u_ar_oxygen_inc_result = transfrom_result(u_ar_oxygen_inc_result);
+                //u_ar_hydrogen_inc_result = transfrom_result(u_ar_hydrogen_inc_result);
+                //u_ar_oxygen_inc_result = transfrom_result(u_ar_oxygen_inc_result);
                 u_ar_hydrogen_exc_result = transfrom_result(u_ar_hydrogen_exc_result);
                 u_ar_oxygen_exc_result = transfrom_result(u_ar_oxygen_exc_result);
 
@@ -191,8 +192,8 @@
                 
                 u_ar_carbon.push(u_ar_carbon_result)
                 u_ar_nitrogen.push(u_ar_nitrogen_result)
-                u_ar_hydrogen_inc.push(u_ar_hydrogen_inc_result)
-                u_ar_oxygen_inc.push(u_ar_oxygen_inc_result)
+                //u_ar_hydrogen_inc.push(u_ar_hydrogen_inc_result)
+                //u_ar_oxygen_inc.push(u_ar_oxygen_inc_result)
                 u_ar_hydrogen_exc.push(u_ar_hydrogen_exc_result)
                 u_ar_oxygen_exc.push(u_ar_oxygen_exc_result)
 
@@ -205,7 +206,8 @@
                 
 		    }
       
-        var csv = Papa.unparse([u_ar_carbon,u_ar_nitrogen,u_ar_hydrogen_inc,u_ar_oxygen_inc,u_ar_hydrogen_exc,u_ar_oxygen_exc]);
+        //var csv = Papa.unparse([u_ar_carbon,u_ar_nitrogen,u_ar_hydrogen_inc,u_ar_oxygen_inc,u_ar_hydrogen_exc,u_ar_oxygen_exc]);
+        var csv = Papa.unparse([u_ar_carbon,u_ar_nitrogen,u_ar_hydrogen_exc,u_ar_oxygen_exc]);
 
         //console.log("csv",csv);
 
@@ -224,8 +226,8 @@
 
         u_ar_carbon = ['AR Carbon Ulti.'];
         u_ar_nitrogen = ['AR Nitrogen Ulti.']
-        u_ar_hydrogen_inc = ['AR Hydrogen Inc. Ulti.']
-        u_ar_oxygen_inc = ['AR Oxygen Inc. Ulti.']
+        //u_ar_hydrogen_inc = ['AR Hydrogen Inc. Ulti.']
+        //u_ar_oxygen_inc = ['AR Oxygen Inc. Ulti.']
         u_ar_hydrogen_exc = ['AR Hydrogen. Exc Ulti.']
         u_ar_oxygen_exc = ['AR Oxygen Exc. Ulti.']
   }
