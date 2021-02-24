@@ -9,47 +9,50 @@
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
     <title>Mea Moh Coal Analysis using Machine Learning</title>
 </head>
-<body class="bg-light" data-new-gr-c-s-check-loaded="14.995.0" data-gr-ext-installed="">
+
+<body class="bg-light">
     <div class="container">
         <main>
             <div class="py-4 text-center">         
-                <div class="p-md-2 mb-auto rounded bg-body shadow-sm">
+                <!-- <div class="p-md-2 mb-auto rounded bg-white shadow-sm"> -->
+                <div class="p-md-auto mb-auto"></div>
                     <h1 class="text-body">Mea Moh Coal Analysis using Machine Learning</h1>
                 </div>
               </div>
             <div class="container">
                 <div class="row">
                     <div class="col-lg-7 col-md-8 mx-auto">
-                        <div class="p-md-2 mb-auto rounded bg-body shadow-sm">  
+                        <div class="p-md-2 mb-auto rounded bg-light shadow ">  
                             <div class="form-group row">
-                                <label for="colFormLabel" class="col-lg-6 col-form-label my-2">1. Download input template file:</label>
+                                <label for="colFormLabel" class="col-lg-6 col-form-label my-2 text-secondary">1. Download input template file:</label>
                                 <div class="col-lg-6">
-                                    <a href="/dataset/input_template.csv" download="input_template.csv" class="btn btn-success my-2 col-lg-12">Download input template</a>
+                                    <a href="/dataset/input_template.csv" download="input_template.csv" class="btn btn-outline-secondary my-2 col-lg-12 shadow-sm">Download input template</a>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="colFormLabel" class="col-lg-6 col-form-label my-2">2. Choose input file (*.csv):</label>
+                                <label for="colFormLabel" class="col-lg-6 col-form-label my-2 text-secondary">2. Choose input file (*.csv):</label>
                                 <div class="col-lg-6">
                                     <input type="file" name="" class="shadow-sm my-3 col-lg-12" id="upload-csv" accept=".csv" >
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="colFormLabel" class="col-lg-6 col-form-label my-1">3. Upload file:</label>
+                                <label for="colFormLabel" class="col-lg-6 col-form-label my-1 text-secondary">3. Upload file:</label>
                                 <div class="col-lg-6">
-                                    <button type="submit" class="btn btn-primary my-2 col-lg-12" id="btn-upload-csv">Uplode CSV</button>
+                                    <button type="submit" class="btn btn-outline-secondary my-2 col-lg-12 shadow-sm" id="btn-upload-csv">Uplode input file.csv</button>
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="colFormLabel" class="col-lg-6 col-form-label my-1" id="label-percent">4. Calculation:</label>
+                                <label for="colFormLabel" class="col-lg-6 col-form-label my-1 text-secondary" id="label-percent">4. Calculation: --%</label>
                             </div>
                             <div class="form-group row">
-                                <label for="colFormLabel" class="col-lg-6 col-form-label my-1">5. Get your result:</label>
+                                <label for="colFormLabel" class="col-lg-6 col-form-label my-1 text-secondary">5. Get your result:</label>
                             </div>   
                         </div>
                     </div>
                 </div>
+                <hr class="my-3">
             </div>
-            <hr class="my-3">
+        
         </main>
         <footer class="mb-2 pt-auto text-muted text-center text-small">
             <div>MAE = Mean Absolute Error | RMSE = Root Mean Squre Error</div>
@@ -57,7 +60,7 @@
             <div>Model summary: 3 Layer with Hidden layer1: 64, hiden layer 2: 32 with relu function and output layer: 1</div>
             <div>with 2915 dataset | Last dataset in 8 FEB 2021 Lab ID: 210208120310</div>
             <div class ="my-2">Develope by: Pitimon Boonyakom | Tel: 67730 | email: pitimon.b@egat.co.th | FEB2021</div>
-            <img src="/web/img/input_output.png" alt="input and output img">
+            <!-- <img src="/web/img/input_output.png" alt="input and output img"> -->
         </footer>
     </div>
         
