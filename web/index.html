@@ -26,6 +26,7 @@
                             <div class="form-group row">
                                 <label for="colFormLabel" class="col-lg-6 col-form-label my-2 text-secondary">1. Download input template file:</label>
                                 <div class="col-lg-6">
+                                    <!-- <a href="/coal_analysis/dataset/input_template.csv" download="input_template.csv" class="btn btn-outline-secondary my-2 col-lg-12 shadow-sm">Download input template</a> -->
                                     <a href="/dataset/input_template.csv" download="input_template.csv" class="btn btn-outline-secondary my-2 col-lg-12 shadow-sm">Download input template</a>
                                 </div>
                             </div>
@@ -38,7 +39,7 @@
                             <div class="form-group row">
                                 <label for="colFormLabel" class="col-lg-6 col-form-label my-1 text-secondary">3. Upload file:</label>
                                 <div class="col-lg-6">
-                                    <button type="submit" class="btn btn-outline-secondary my-2 col-lg-12 shadow-sm" id="btn-upload-csv">Uplode input file.csv</button>
+                                    <button type="submit" class="btn btn-outline-secondary my-2 col-lg-12 shadow-sm" id="btn-upload-csv">Upload input file.csv</button>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -155,10 +156,14 @@
                 // console.log("p_ar_hhv_normed: ",p_ar_hhv_normed);
                 // console.log("p_ar_lhv_normed: ",p_ar_lhv_normed);
 
+                //let u_ar_carbon_url = '/coal_analysis/model/carbon/model.json'
+                //let u_ar_nitrogen_url = '/coal_analysis/model/nitrogen/model.json'
                 let u_ar_carbon_url = '/model/carbon/model.json'
                 let u_ar_nitrogen_url = '/model/nitrogen/model.json'
-                //let u_ar_hydrogen_inc_url = '/model/hydrogen_inc/model.json'
-                //let u_ar_oxygen_inc_url = '/model/oxygen_inc/model.json'
+                //let u_ar_hydrogen_inc_url = '/model/hydrogen_inc/model.json'---> not use
+                //let u_ar_oxygen_inc_url = '/model/oxygen_inc/model.json' ---> not use
+                //let u_ar_hydrogen_exc_url = '/coal_analysis/model/hydrogen_exc/model.json'
+                //let u_ar_oxygen_exc_url = '/coal_analysis/model/oxygen_exc/model.json'
                 let u_ar_hydrogen_exc_url = '/model/hydrogen_exc/model.json'
                 let u_ar_oxygen_exc_url = '/model/oxygen_exc/model.json'
 
