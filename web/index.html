@@ -26,8 +26,8 @@
                             <div class="form-group row">
                                 <label for="colFormLabel" class="col-lg-6 col-form-label my-2 text-secondary">1. Download input template file:</label>
                                 <div class="col-lg-6">
-                                    <!-- <a href="/coal_analysis/dataset/input_template.csv" download="input_template.csv" class="btn btn-outline-secondary my-2 col-lg-12 shadow-sm">Download input template</a> -->
-                                    <a href="/dataset/input_template.csv" download="input_template.csv" class="btn btn-outline-secondary my-2 col-lg-12 shadow-sm">Download input template</a>
+                                    <a href="/coal_analysis/dataset/input_template.csv" download="input_template.csv" class="btn btn-outline-secondary my-2 col-lg-12 shadow-sm">Download input template</a>
+                                    <!-- <a href="/dataset/input_template.csv" download="input_template.csv" class="btn btn-outline-secondary my-2 col-lg-12 shadow-sm">Download input template</a> -->
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -158,14 +158,14 @@
 
                 //let u_ar_carbon_url = '/coal_analysis/model/carbon/model.json'
                 //let u_ar_nitrogen_url = '/coal_analysis/model/nitrogen/model.json'
-                let u_ar_carbon_url = '/model/carbon/model.json'
-                let u_ar_nitrogen_url = '/model/nitrogen/model.json'
+                let u_ar_carbon_url = 'https://raw.githubusercontent.com/pitimonb/coal_analysis/main/model/carbon/model.json'
+                let u_ar_nitrogen_url = 'https://raw.githubusercontent.com/pitimonb/coal_analysis/main/model/nitrogen/model.json'
                 //let u_ar_hydrogen_inc_url = '/model/hydrogen_inc/model.json'---> not use
                 //let u_ar_oxygen_inc_url = '/model/oxygen_inc/model.json' ---> not use
                 //let u_ar_hydrogen_exc_url = '/coal_analysis/model/hydrogen_exc/model.json'
                 //let u_ar_oxygen_exc_url = '/coal_analysis/model/oxygen_exc/model.json'
-                let u_ar_hydrogen_exc_url = '/model/hydrogen_exc/model.json'
-                let u_ar_oxygen_exc_url = '/model/oxygen_exc/model.json'
+                let u_ar_hydrogen_exc_url = 'https://raw.githubusercontent.com/pitimonb/coal_analysis/main/model/hydrogen_exc/model.json'
+                let u_ar_oxygen_exc_url = 'https://raw.githubusercontent.com/pitimonb/coal_analysis/main/model/oxygen_exc/model.json'
 
                 let u_ar_carbon_model = await tf.loadLayersModel(u_ar_carbon_url);
                 let u_ar_nitrogen_model = await tf.loadLayersModel(u_ar_nitrogen_url);
